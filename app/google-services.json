@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "433957015241",
+    "firebase_url": "https://timeticketdata.firebaseio.com",
+    "project_id": "timeticketdata",
+    "storage_bucket": "timeticketdata.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:433957015241:android:c44d1352e8c880fb",
+        "android_client_info": {
+          "package_name": "com.example.sohanagarkar.timetickets"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "433957015241-14etva61rqj6uph4q2i8unie4csl2jm2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-BYf1KTWY5AeFuZlhYyS6ljOT45NkFyA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
