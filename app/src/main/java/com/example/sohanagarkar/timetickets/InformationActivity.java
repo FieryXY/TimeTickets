@@ -238,12 +238,39 @@ public class InformationActivity extends SimpleActivity {
         EditText playername = (EditText) findViewById(R.id.player_number);
         if(playername.getText().toString() != "" ) {
             DatabaseReference addPlayerfb = FirebaseDatabase.getInstance().getReference();
-
+            int cCount = (int) childrenCount;
+            DatabaseReference childRef = addPlayerfb.child("codes").child(code).child("players").child(String.valueOf(cCount+1));
+            DatabaseReference nameRef = childRef.child("name");
+            nameRef.setValue(playername.getText().toString());
+            DatabaseReference pointsRef = childRef.child("points");
+            pointsRef.setValue("0");
+            refresh();
         }
         else {
             toast("type player name");
         }
     }
+
+   /* public void removePlayerBase(View view) {
+        EditText playername = (EditText) findViewById(R.id.player_number);
+        int cCount = (int) childrenCount;
+        if(isNumber(playername.getText().toString())) {
+            if(Integer.parseInt(playername.getText().toString()) <= cCount) {
+                DatabaseReference addPlayerfb = FirebaseDatabase.getInstance().getReference();
+
+                DatabaseReference childRef = addPlayerfb.child("codes").child(code).child("players").child(playername.getText().toString());
+                childRef.setValue(null);
+                refresh();
+            }
+            else {
+                toast("type player name correctly");
+            }
+
+        } else {
+            toast("Check your input");
+        }
+
+    } */
 
     //TODO writing function for down
 }
