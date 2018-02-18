@@ -53,6 +53,7 @@ private String passcode = "hunka";
                 }
                 else{
                     toast("Invalid Code");
+                    //TODO create "Code Maker" activity and add dynamic players in it
                 }
             }
 
