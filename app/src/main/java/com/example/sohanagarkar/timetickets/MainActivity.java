@@ -72,4 +72,7 @@ private String passcode = "hunka";
        }*/
 
     }
+
+    public void createCodeLaunch(View view) {
+    }
 }

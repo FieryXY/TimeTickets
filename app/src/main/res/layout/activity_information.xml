@@ -57,6 +57,17 @@
             />
 
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add player"
+        android:onClick="addPlayerBase"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove player"
+        />
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,7 +78,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="player number"
+        android:hint="player number or player name for adding"
         android:id="@+id/player_number"
         />
     <LinearLayout
@@ -99,10 +110,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </ListView>
     </ScrollView>
+
+    <ListView
+        android:id="@+id/lview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>

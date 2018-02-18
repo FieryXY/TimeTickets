@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -17,12 +19,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import stanford.androidlib.SimpleActivity;
 
 public class InformationActivity extends SimpleActivity {
     private long childrenCount;
     private int[] arrPoints;
     private String code;
+    private String[] listItems;
+    private String[] nameItems;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,13 +68,41 @@ public class InformationActivity extends SimpleActivity {
 
 
                }*/
+                listItems = new String[childrenC];
+                String nameItem;
+                nameItems = new String[childrenC];
+                for(int k = 0; k < childrenC; k++) {
+                    nameItem = dataSnapshot.child(k+1 + "/name").getValue().toString();
+                    nameItems[k] = nameItem;
+                }
+                String listItem;
+                for(int j = 0; j < childrenC; j++) {
+                    listItem = nameItems[j] +  "(" + (j+1) + ")" + "-" + arrPoints[j];
+                    listItems[j] = listItem;
+                    //TODO first priority is to have value location into ListView
+
+                }
+               createList(childrenC);
            }
+
+
 
            @Override
            public void onCancelled(DatabaseError databaseError) {
 
            }
        });
+    }
+    public void createList(int childrenCounter) {
+        ListView lv = (ListView) findViewById(R.id.lview);
+        final List<String> players_list = new ArrayList<String>(Arrays.asList(listItems));
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                (InformationActivity.this, android.R.layout.simple_list_item_1, players_list);
+        lv.setAdapter(arrayAdapter);
+        /*for(int ik = 0; ik < childrenCounter; ik++) {
+           players_list.add(listItems[ik]);
+        }*/
+        arrayAdapter.notifyDataSetChanged();
     }
     //TODO writing function for up
     public void Uplayers(View view) {
@@ -168,7 +204,24 @@ public class InformationActivity extends SimpleActivity {
 
 
                }*/
+                listItems = new String[childrenC];
+                String nameItem;
+                nameItems = new String[childrenC];
+                for(int k = 0; k < childrenC; k++) {
+                    nameItem = dataSnapshot.child(k+1 + "/name").getValue().toString();
+                    nameItems[k] = nameItem;
+                }
+                String listItem;
+                for(int j = 0; j < childrenC; j++) {
+                    listItem = nameItems[j] +  "(" + (j+1) + ")" + "-" + arrPoints[j];
+                    listItems[j] = listItem;
+                    //TODO first priority is to have value location into ListView
+
+                }
+                createList(childrenC);
             }
+
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -179,6 +232,17 @@ public class InformationActivity extends SimpleActivity {
 
     public void refreshValue(View view) {
         refresh();
+    }
+
+    public void addPlayerBase(View view) {
+        EditText playername = (EditText) findViewById(R.id.player_number);
+        if(playername.getText().toString() != "" ) {
+            DatabaseReference addPlayerfb = FirebaseDatabase.getInstance().getReference();
+
+        }
+        else {
+            toast("type player name");
+        }
     }
 
     //TODO writing function for down
