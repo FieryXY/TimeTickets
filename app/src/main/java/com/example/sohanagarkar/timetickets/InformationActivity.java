@@ -28,6 +28,7 @@ import stanford.androidlib.SimpleActivity;
 public class InformationActivity extends SimpleActivity {
     private long childrenCount;
     private int[] arrPoints;
+    private int[] arrIds;
     private String code;
     private String[] listItems;
     private String[] nameItems;
@@ -50,9 +51,22 @@ public class InformationActivity extends SimpleActivity {
                 TextView playerTwo = (TextView) findViewById(R.id.points_2);
                 TextView nameOne = (TextView) findViewById(R.id.name_1);
                TextView nameTwo = (TextView) findViewById(R.id.name_2);
+               Iterable<DataSnapshot> dohobo = dataSnapshot.getChildren();
+               arrIds = new int[childrenC];
+               int dolofo = 0;
+               for(DataSnapshot snapper : dohobo) {
+                   if(isNumber(snapper.getKey().toString())) {
+                       arrIds[dolofo] = Integer.parseInt(snapper.getKey());
+                       dolofo++;
+                   }
+                   else {
+                       toast("Error");
+                       //break;
+                   }
+               }
                String valueQuery;
                for(int i = 0; i < childrenC; i++) {
-                   valueQuery = dataSnapshot.child(i+1 + "/points").getValue().toString();
+                   valueQuery = dataSnapshot.child(arrIds[i] + "/points").getValue().toString();
                    arrPoints[i] = Integer.parseInt(valueQuery);
                }
                 playerOne.setText(dataSnapshot.child("1/points").getValue().toString());
@@ -72,12 +86,12 @@ public class InformationActivity extends SimpleActivity {
                 String nameItem;
                 nameItems = new String[childrenC];
                 for(int k = 0; k < childrenC; k++) {
-                    nameItem = dataSnapshot.child(k+1 + "/name").getValue().toString();
+                    nameItem = dataSnapshot.child(arrIds[k] + "/name").getValue().toString();
                     nameItems[k] = nameItem;
                 }
                 String listItem;
                 for(int j = 0; j < childrenC; j++) {
-                    listItem = nameItems[j] +  "(" + (j+1) + ")" + "-" + arrPoints[j];
+                    listItem = nameItems[j] +  "(" + (arrIds[j]) + ")" + "-" + arrPoints[j];
                     listItems[j] = listItem;
                     //TODO first priority is to have value location into ListView
 
@@ -186,9 +200,22 @@ public class InformationActivity extends SimpleActivity {
                 TextView playerTwo = (TextView) findViewById(R.id.points_2);
                 TextView nameOne = (TextView) findViewById(R.id.name_1);
                 TextView nameTwo = (TextView) findViewById(R.id.name_2);
+                Iterable<DataSnapshot> dohobo = dataSnapshot.getChildren();
+                arrIds = new int[childrenC];
+                int dolofo = 0;
+                for(DataSnapshot snapper : dohobo) {
+                    if(isNumber(snapper.getKey().toString())) {
+                        arrIds[dolofo] = Integer.parseInt(snapper.getKey());
+                        dolofo++;
+                    }
+                    else {
+                        toast("Error");
+                        //break;
+                    }
+                }
                 String valueQuery;
                 for(int i = 0; i < childrenC; i++) {
-                    valueQuery = dataSnapshot.child(i+1 + "/points").getValue().toString();
+                    valueQuery = dataSnapshot.child(arrIds[i] + "/points").getValue().toString();
                     arrPoints[i] = Integer.parseInt(valueQuery);
                 }
                 playerOne.setText(dataSnapshot.child("1/points").getValue().toString());
@@ -208,12 +235,12 @@ public class InformationActivity extends SimpleActivity {
                 String nameItem;
                 nameItems = new String[childrenC];
                 for(int k = 0; k < childrenC; k++) {
-                    nameItem = dataSnapshot.child(k+1 + "/name").getValue().toString();
+                    nameItem = dataSnapshot.child(arrIds[k] + "/name").getValue().toString();
                     nameItems[k] = nameItem;
                 }
                 String listItem;
                 for(int j = 0; j < childrenC; j++) {
-                    listItem = nameItems[j] +  "(" + (j+1) + ")" + "-" + arrPoints[j];
+                    listItem = nameItems[j] +  "(" + (arrIds[j]) + ")" + "-" + arrPoints[j];
                     listItems[j] = listItem;
                     //TODO first priority is to have value location into ListView
 
@@ -239,7 +266,7 @@ public class InformationActivity extends SimpleActivity {
         if(playername.getText().toString() != "" ) {
             DatabaseReference addPlayerfb = FirebaseDatabase.getInstance().getReference();
             int cCount = (int) childrenCount;
-            DatabaseReference childRef = addPlayerfb.child("codes").child(code).child("players").child(String.valueOf(cCount+1));
+            DatabaseReference childRef = addPlayerfb.child("codes").child(code).child("players").child(String.valueOf(biggestValue(arrIds)+1));
             DatabaseReference nameRef = childRef.child("name");
             nameRef.setValue(playername.getText().toString());
             DatabaseReference pointsRef = childRef.child("points");
@@ -251,11 +278,13 @@ public class InformationActivity extends SimpleActivity {
         }
     }
 
-   /* public void removePlayerBase(View view) {
+
+
+    public void removePlayerBase(View view) {
         EditText playername = (EditText) findViewById(R.id.player_number);
         int cCount = (int) childrenCount;
-        if(isNumber(playername.getText().toString())) {
-            if(Integer.parseInt(playername.getText().toString()) <= cCount) {
+        if(isNumber(playername.getText().toString()) == true) {
+            if(containseri(arrIds, Integer.parseInt(playername.getText().toString())) == true) {
                 DatabaseReference addPlayerfb = FirebaseDatabase.getInstance().getReference();
 
                 DatabaseReference childRef = addPlayerfb.child("codes").child(code).child("players").child(playername.getText().toString());
@@ -270,7 +299,28 @@ public class InformationActivity extends SimpleActivity {
             toast("Check your input");
         }
 
-    } */
+    }
 
     //TODO writing function for down
+    public boolean containseri(int[] array,int key) {
+        for (int n : array) {
+            if (key == n) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public int biggestValue(int[] array) {
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < array.length; i++) {
+            if(array[i] > max) {
+                max = array[i];
+            }
+        }
+        return max;
+    }
+    public int findIdbyName(String named) {
+        //TODO find Id name from name value for user friendly stuff
+        return 1;
+    }
 }
